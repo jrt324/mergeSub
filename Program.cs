@@ -1,3 +1,5 @@
+using ClashSubConvert;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -8,37 +10,20 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+// if (app.Environment.IsDevelopment())
+// {
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+// }
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
+app.MapGet("/covert", async (string subUrl, string addServer, string toRule) =>
 {
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
-
+    Console.WriteLine("call covert");
+    var groups = toRule.Split(',');
+    var yaml = await ClashYamlUtil.ConvertUrl(subUrl, addServer, groups);
+    return yaml;
+}).WithOpenApi();
+app.MapGet("/test", () => "Hello World!").WithOpenApi();
 app.Run();
-
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}

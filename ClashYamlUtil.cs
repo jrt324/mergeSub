@@ -4,13 +4,15 @@ using YamlDotNet.Serialization.NamingConventions;
 
 namespace ClashSubConvert;
 
-public class ClashYaml
+public class ClashYamlUtil
 {
     static readonly HttpClient client = new();
 
-    public static async Task<string> ConvertClash(string subscribeUrl, string serverConfig, string proxyGroupName)
+    public static async Task<string> ConvertUrl(string subscribeUrl, string serverConfig, string[] proxyGroupNames)
     {
+        Console.WriteLine("subscribeUrl: " + subscribeUrl);
         string yamlStr = await client.GetStringAsync(subscribeUrl);
+        Console.WriteLine("yaml: \r\n" + yamlStr);
 
         // base64 decode addServer param
         var addServerStr = Encoding.UTF8.GetString(Convert.FromBase64String(serverConfig));
@@ -23,21 +25,24 @@ public class ClashYaml
         proxies.Add(addServerYaml);
 
         var proxyGroups = dictionary["proxy-groups"] as List<object>;
-        var targetGroup = proxyGroups.Where(g =>
+        var targetGroups = proxyGroups.Where(g =>
         {
             var group = g as Dictionary<object, object>;
             if (group.TryGetValue("name", out var val))
             {
-                return (string) val == proxyGroupName;
+                return proxyGroupNames.Contains(val);
             }
             return false;
-        }).FirstOrDefault();
+        }).ToList();
 
-        if (targetGroup != null)
+        if (targetGroups.Count > 0)
         {
-            var targetGroupDict = targetGroup as Dictionary<object, object>;
-            var groupProxies = targetGroupDict?["proxies"] as List<object>;
-            groupProxies?.Add(addServerYaml["name"]);
+            foreach (var targetGroup in targetGroups)
+            {
+                var targetGroupDict = targetGroup as Dictionary<object, object>;
+                var groupProxies = targetGroupDict?["proxies"] as List<object>;
+                groupProxies?.Add(addServerYaml["name"]);
+            }
         }
 
         var serializer = new SerializerBuilder()
