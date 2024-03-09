@@ -1,5 +1,7 @@
-# mergeSub
-### **Add  server to an existing subscription link , and generate a new subscription link.**
+# ClashSubConvert
+**Add proxy server to an existing subscription link , and generate a new subscription link.**
+
+
 
 http://localhost:8081/covert?subUrl=**{subUrl}**&addServer=**{addServer}**&toRule=**Proxy,OpenAI**
 
