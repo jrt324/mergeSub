@@ -1,0 +1,6 @@
+@ClashSubConvert_HostAddress = http://localhost:5189
+
+GET {{ClashSubConvert_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
