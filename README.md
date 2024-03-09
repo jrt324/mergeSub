@@ -1,5 +1,5 @@
-# ClashSubConvert
-**Add proxy server to an existing subscription link , and generate a new subscription link.**
+# mergeSub
+### **Add  server to an existing subscription link , and generate a new subscription link.**
 
 
 
