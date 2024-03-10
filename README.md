@@ -3,7 +3,7 @@
 
 
 
-http://localhost:8081/covert?subUrl=**{subUrl}**&addServer=**{addServer}**&toRule=**Proxy,OpenAI**
+http://localhost:8081/covert?subUrl={subUrl}&addServer={addServer}&toRule=Proxy,OpenAI
 
 <u>Please replace the corresponding parameters in the URL</u>
 
