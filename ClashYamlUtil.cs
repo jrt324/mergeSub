@@ -12,7 +12,9 @@ public class ClashYamlUtil
     {
         Console.WriteLine("subscribeUrl: " + subscribeUrl);
         string yamlStr = await client.GetStringAsync(subscribeUrl);
-        Console.WriteLine("yaml: \r\n" + yamlStr);
+        // Console.WriteLine("yaml: \r\n" + yamlStr);
+        Console.WriteLine("get remote subscribe url success!");
+        Console.WriteLine("process append server node:" + serverConfig);
 
         // base64 decode addServer param
         var addServerStr = Encoding.UTF8.GetString(Convert.FromBase64String(serverConfig));
@@ -47,10 +49,11 @@ public class ClashYamlUtil
 
         var serializer = new SerializerBuilder()
             .WithNamingConvention(CamelCaseNamingConvention.Instance)
+            .WithIndentedSequences()
             .Build();
         var output = serializer.Serialize(dictionary);
-
-        Console.WriteLine(output);
+        Console.WriteLine("convert success!");
+        // Console.WriteLine(output);
         return output;
     }
 }
