@@ -12,7 +12,6 @@ public class ClashYamlUtil
     {
         Console.WriteLine("subscribeUrl: " + subscribeUrl);
         string yamlStr = await client.GetStringAsync(subscribeUrl);
-        // base64 decode addServer param
         var deserializer = new DeserializerBuilder()
             .WithNamingConvention(CamelCaseNamingConvention.Instance)
             .Build();
@@ -60,7 +59,6 @@ public class ClashYamlUtil
             .Build();
         var output = serializer.Serialize(dictionary);
         Console.WriteLine("convert success!");
-        // Console.WriteLine(output);
         return output;
     }
 }

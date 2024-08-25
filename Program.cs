@@ -22,7 +22,7 @@ app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
-app.MapGet("/covert", async (string subUrl, string[] addServer, string[] toRule) =>
+app.MapGet("/convert", async (string subUrl, string[] addServer, string[] toRule) =>
 {
     Console.WriteLine("call covert");
     if (addServer.Length != toRule.Length && toRule.Length != 1)

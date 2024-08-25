@@ -12,4 +12,9 @@
         <PackageReference Include="YamlDotNet" Version="15.1.2" />
     </ItemGroup>
 
+    <PropertyGroup>
+        <PublishTrimmed>true</PublishTrimmed>
+        <JsonSerializerIsReflectionEnabledByDefault>true</JsonSerializerIsReflectionEnabledByDefault>
+    </PropertyGroup>
+
 </Project>
